@@ -1,9 +1,9 @@
-import { createOrder } from "../../services/apiRestaurant";
+import { createOrder, updateOrder } from "../../services/apiRestaurant";
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
     str,
   );
-export async function action({ request }) {
+export async function createOrderAction({ request }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
@@ -25,4 +25,13 @@ export async function action({ request }) {
 
   // Return a success flag along with the redirect URL
   return { success: true, redirectTo: `/order/${res.id}` };
+}
+
+export async function updateOrderAction({ request, params }) {
+  const data = { priority: true };
+
+  await updateOrder(params.orderId, data);
+
+  console.log(params);
+  return null;
 }

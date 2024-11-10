@@ -8,8 +8,10 @@ import {
   formatDate,
 } from "../../utils/helpers";
 import OrderItem from "./OrderItem";
+import UpdateOrder from "./UpdateOrder";
 
 function Order() {
+  const order = useLoaderData();
   const {
     id,
     status,
@@ -18,7 +20,8 @@ function Order() {
     orderPrice,
     estimatedDelivery,
     cart,
-  } = useLoaderData();
+  } = order;
+  console.log(priority);
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
@@ -68,6 +71,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 }
